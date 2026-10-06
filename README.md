@@ -155,3 +155,13 @@ npm run dev
 
 MIT — делай что хочешь, только кабана не обижай.
 ```
+
+kanbanban/
+├── .gitignore
+├── .env.example
+├── proto/
+├── java-service/
+├── node-bff/
+├── react-app/
+├── docker-compose.yml
+└── README.md
