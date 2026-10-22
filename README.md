@@ -1,3 +1,6 @@
+Вот обновленный `README.md` с заменой Java на Python. Скопируй и замени весь текст в файле.
+
+```markdown
 # 🐗 KanBanBan
 
 > Канбан-доска для команд. Канбан + Кабан = порядок в задачах.
@@ -11,22 +14,22 @@
 ## 🏗️ Архитектура
 
 ```
-┌──────────────┐   gRPC   ┌──────────────┐   REST + WS   ┌─────────────┐
-│ Java Service │ ───────► │  Node.js BFF │ ────────────► │   React     │
-│  (Railway)   │ ◄─────── │  (Railway)   │ ◄──────────── │  (Vercel)   │
-└──────┬───────┘          └──────┬───────┘               └─────────────┘
-       │                         │
-       │  Redis Pub/Sub          │
-       └──────────┬──────────────┘
-                  ▼
-       ┌──────────────────────┐
-       │ PostgreSQL + Redis   │
-       └──────────────────────┘
+┌────────────────┐   gRPC   ┌──────────────┐   REST + WS   ┌─────────────┐
+│ Python Service │ ───────► │  Node.js BFF │ ────────────► │   React     │
+│   (Railway)    │ ◄─────── │  (Railway)   │ ◄──────────── │  (Vercel)   │
+└───────┬────────┘          └──────┬───────┘               └─────────────┘
+        │                          │
+        │  Redis Pub/Sub           │
+        └──────────┬───────────────┘
+                   ▼
+        ┌──────────────────────┐
+        │ PostgreSQL + Redis   │
+        └──────────────────────┘
 ```
 
-- **Java Service** — доменная логика, gRPC-сервер, работа с БД.
-- **Node.js BFF** — API Gateway под фронт: REST + WebSocket, агрегирует данные из Java.
-- **Redis Pub/Sub** — мост между Java и Node для real-time событий.
+- **Python Service** — доменная логика, gRPC-сервер, работа с БД.
+- **Node.js BFF** — API Gateway под фронт: REST + WebSocket, агрегирует данные из Python.
+- **Redis Pub/Sub** — мост между Python и Node для real-time событий.
 - **PostgreSQL** — основное хранилище.
 - **React** — фронт, общается только с BFF.
 
@@ -36,8 +39,8 @@
 
 | Слой | Технология |
 |---|---|
-| Доменный сервис | Java 21 + Spring Boot 3 + grpc-spring-boot-starter |
-| BFF | Node.js + NestJS + socket.io |
+| Доменный сервис | Python 3.12 + FastAPI + grpcio + SQLAlchemy + Alembic |
+| BFF | Node.js + NestJS + socket.io + @grpc/grpc-js |
 | БД | PostgreSQL + Redis |
 | Контракты | Protocol Buffers (gRPC) |
 | Инфраструктура | Docker + Docker Compose |
@@ -55,7 +58,7 @@
 - ⚡ Real-time синхронизация через WebSocket
 - 🔔 Мгновенные уведомления о событиях
 - 🔎 Фильтры по исполнителю и статусу
-- 🧵 Многопоточность: `@Async` + `CompletableFuture`
+- 🧵 Асинхронность: `asyncio` + `asyncpg`
 - 📡 gRPC между сервисами
 - 📨 Redis Pub/Sub для событий
 
@@ -66,7 +69,7 @@
 ```
 kanbanban/
 ├── proto/              # .proto файлы (общие контракты)
-├── java-service/       # Spring Boot + gRPC
+├── python-service/     # FastAPI + gRPC
 ├── node-bff/           # NestJS + WebSocket + gRPC-клиент
 ├── react-app/          # React + TS
 ├── docker-compose.yml  # Локальный запуск
@@ -79,8 +82,7 @@ kanbanban/
 
 ### Требования
 - Docker + Docker Compose
-- Java 21
-- Maven
+- Python 3.12+
 - Node.js 20+
 
 ### 1. Клонировать репозиторий
@@ -94,10 +96,13 @@ cd kanbanban
 docker compose up -d postgres redis
 ```
 
-### 3. Запустить Java-сервис
+### 3. Запустить Python-сервис
 ```bash
-cd java-service
-./mvnw spring-boot:run
+cd python-service
+python -m venv venv
+source venv/bin/activate  # Для Windows: venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn main:app --reload --port 8080
 ```
 
 ### 4. Запустить Node BFF
@@ -122,7 +127,7 @@ npm run dev
 
 | Компонент | Платформа | URL |
 |---|---|---|
-| Java Service | Railway | приватный домен |
+| Python Service | Railway | приватный домен |
 | Node BFF | Railway | `kanbanban-bff.up.railway.app` |
 | PostgreSQL | Railway | managed |
 | Redis | Railway | managed |
@@ -155,13 +160,3 @@ npm run dev
 
 MIT — делай что хочешь, только кабана не обижай.
 ```
-
-kanbanban/
-├── .gitignore
-├── .env.example
-├── proto/
-├── java-service/
-├── node-bff/
-├── react-app/
-├── docker-compose.yml
-└── README.md
