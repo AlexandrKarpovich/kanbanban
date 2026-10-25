@@ -61,6 +61,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # ===== IDE =====
+.gigaide/
 .idea/
 *.iml
 *.ipr
