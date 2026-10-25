@@ -40,3 +40,12 @@ python-service/
 ├── .env.example             # Шаблон переменных окружения (для git)
 └── .env                     # Твои локальные секреты (в git не попадает)
 ```
+
+## 🔄 Генерация gRPC-кода
+
+Если вы изменили контракты в папке `proto/`, вам нужно сгенерировать Python-код заново. Выполните команду из корня `python-service`:
+
+```powershell
+python -m grpc_tools.protoc -Iproto --python_out=app/grpc --grpc_python_out=app/grpc proto/имя_файла.proto
+```
+Примечание: после генерации не забудьте проверить импорты в файлах *_pb2_grpc.py (они должны начинаться с from app.grpc import ...).

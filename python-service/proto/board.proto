@@ -1,0 +1,18 @@
+syntax = "proto3";
+package board;
+
+service BoardService {
+  // Метод для создания новой доски
+  rpc CreateBoard (CreateBoardRequest) returns (BoardResponse);
+}
+
+message CreateBoardRequest {
+  string title = 1;
+  int32 owner_id = 2;
+}
+
+message BoardResponse {
+  int32 id = 1;
+  string title = 2;
+  int32 owner_id = 3;
+}
