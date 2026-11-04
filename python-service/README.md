@@ -36,3 +36,5 @@ powershell
 python -m grpc_tools.protoc -Iproto --python_out=app/grpc --grpc_python_out=app/grpc proto/имя_файла.proto
 
 
+запустить бд
+docker start kanban-postgres
