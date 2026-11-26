@@ -1,7 +1,7 @@
-from app.models.user import User
-from app.models.board import Board
+from app.models.board import Board, board_members
 from app.models.column import Column
-from app.models.task import Task
 from app.models.comment import Comment
+from app.models.task import Task
+from app.models.user import User
 
-__all__ = ["User", "Board", "Column", "Task", "Comment"]
+__all__ = ["User", "Board", "board_members", "Column", "Task", "Comment"]
