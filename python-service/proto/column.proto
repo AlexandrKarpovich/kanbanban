@@ -1,0 +1,19 @@
+syntax = "proto3";
+package column;
+
+service ColumnService {
+  rpc CreateColumn (CreateColumnRequest) returns (ColumnResponse);
+}
+
+message CreateColumnRequest {
+  string title = 1;
+  int32 board_id = 2;
+  int32 position = 3;
+}
+
+message ColumnResponse {
+  int32 id = 1;
+  string title = 2;
+  int32 board_id = 3;
+  int32 position = 4;
+}
